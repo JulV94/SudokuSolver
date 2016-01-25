@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <fstream>
-#include "entrees.h"
+#include "inputs.h"
 #include "solver.h"
-#include "sorties.h"
+#include "outputs.h"
 
 using namespace std;
 

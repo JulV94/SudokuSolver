@@ -1,74 +1,74 @@
 #include "solver.h"
 
-int estDansLigne(int grille[9][9], int n, int i)
+int isInLine(int grid[9][9], int n, int i)
 {
-    int test = 0;
+    int result = 0;
     int j = 0;
-    while (j <= 8 && test == 0)
+    while (j <= 8 && result == 0)
     {
-        if (grille[i][j] == n)
+        if (grid[i][j] == n)
         {
-            test = 1;
+            result = 1;
         }
         else
         {
-            test = 0;
+            result = 0;
         }
         j++;
     }
-    return test;
+    return result;
 }
 
-int estDansColonne(int grille[9][9], int n, int j)
+int isInColumn(int grid[9][9], int n, int j)
 {
-    int test = 0;
+    int result = 0;
     int i = 0;
-    while (i <= 8 && test == 0)
+    while (i <= 8 && result == 0)
     {
-        if (grille[i][j] == n)
+        if (grid[i][j] == n)
         {
-            test = 1;
+            result = 1;
         }
         else
         {
-            test = 0;
+            result = 0;
         }
         i++;
     }
-    return test;
+    return result;
 }
 
-int estDansCarre(int grille[9][9], int n, int i, int j)
+int isInSquare(int grid[9][9], int n, int i, int j)
 {
     int c = 0;
-    int test = 0;
-    int carreligne, carrecolonne, debutcarreligne, debutcarrecolonne;
-    carreligne = i/3;
-    carrecolonne = j/3;
-    debutcarreligne = carreligne*3;
-    debutcarrecolonne = carrecolonne*3;
-    while (c <= 8 && test == 0)
+    int result = 0;
+    int squareLine, squareColumn, startSquareLine, startSquareColumn;
+    squareLine = i/3;
+    squareColumn = j/3;
+    startSquareLine = squareLine*3;
+    startSquareColumn = squareColumn*3;
+    while (c <= 8 && result == 0)
     {
-        if (grille[debutcarreligne][debutcarrecolonne] == n)
+        if (grid[startSquareLine][startSquareColumn] == n)
         {
-            test = 1;
+            result = 1;
         }
         else
         {
-            test = 0;
+            result = 0;
         }
-        debutcarrecolonne = debutcarrecolonne + 1;
-        if (debutcarrecolonne % 3 == 0)
+        startSquareColumn = startSquareColumn + 1;
+        if (startSquareColumn % 3 == 0)
         {
-            debutcarrecolonne = debutcarrecolonne - 3;
-            debutcarreligne = debutcarreligne + 1;
+            startSquareColumn = startSquareColumn - 3;
+            startSquareLine = startSquareLine + 1;
         }
         c++;
     }
-    return test;
+    return result;
 }
 
-int resoudre(int grille[9][9], int patron[9][9])
+int solve(int grid[9][9], int pattern[9][9])
 {
     int i = 0, j = 0, n = 1, buffer;
 
@@ -76,18 +76,18 @@ int resoudre(int grille[9][9], int patron[9][9])
     {
         for (int l = 0 ; l<9 ; l++)
         {
-            if (patron[k][l] != 0)
+            if (pattern[k][l] != 0)
             {
-                buffer = grille[k][l];
-                grille[k][l] = 0;
-                if (estDansLigne(grille, buffer, k) != 0 || estDansColonne(grille, buffer, l) != 0 || estDansCarre(grille, buffer, k, l) != 0)
+                buffer = grid[k][l];
+                grid[k][l] = 0;
+                if (isInLine(grid, buffer, k) != 0 || isInColumn(grid, buffer, l) != 0 || isInSquare(grid, buffer, k, l) != 0)
                 {
-                    grille[k][l] = buffer;
-                    return 0; //INVALIDE!!!
+                    grid[k][l] = buffer;
+                    return 0; //INVALID!!!
                 }
                 else
                 {
-                    grille[k][l] = buffer;
+                    grid[k][l] = buffer;
                 }
             }
         }
@@ -95,7 +95,7 @@ int resoudre(int grille[9][9], int patron[9][9])
 
     while (i<9 && j<9 && i>=0 && j>=0)
     {
-        if (patron[i][j] != 0)
+        if (pattern[i][j] != 0)
         {
             if (j == 8)
             {
@@ -109,9 +109,9 @@ int resoudre(int grille[9][9], int patron[9][9])
         }
         else
         {
-            if (estDansLigne(grille, n, i) == 0 && estDansColonne(grille, n, j) == 0 && estDansCarre(grille, n, i, j) == 0)
+            if (isInLine(grid, n, i) == 0 && isInColumn(grid, n, j) == 0 && isInSquare(grid, n, i, j) == 0)
             {
-                grille[i][j] = n;
+                grid[i][j] = n;
                 if (j == 8)
                 {
                     j = 0;
@@ -127,7 +127,7 @@ int resoudre(int grille[9][9], int patron[9][9])
             {
                 if (n == 9)
                 {
-                    grille[i][j] = 0;
+                    grid[i][j] = 0;
                     if (j == 0)
                     {
                         j = 8;
@@ -137,11 +137,11 @@ int resoudre(int grille[9][9], int patron[9][9])
                     {
                         j--;
                     }
-                    while (patron[i][j] == 1 || grille[i][j] == 9)
+                    while (pattern[i][j] == 1 || grid[i][j] == 9)
                     {
-                        if (grille[i][j] == 9 && patron[i][j] == 0)
+                        if (grid[i][j] == 9 && pattern[i][j] == 0)
                         {
-                            grille[i][j] = 0;
+                            grid[i][j] = 0;
                         }
                         if (j == 0)
                         {
@@ -153,7 +153,7 @@ int resoudre(int grille[9][9], int patron[9][9])
                             j--;
                         }
                     }
-                    n = grille[i][j] + 1;
+                    n = grid[i][j] + 1;
                 }
                 else
                 {
@@ -162,17 +162,17 @@ int resoudre(int grille[9][9], int patron[9][9])
             }
         }
     }
-    //On vérifie si la grille est complétée ou si elle a généré une impossibilité -> invalide
+    //Check if the grid is valid or if there is something impossible -> invalid
     for (int k = 0 ; k<9 ; k++)
     {
         for (int l = 0 ; l<9 ; l++)
         {
-            if (grille[k][l] == 0)
+            if (grid[k][l] == 0)
             {
-                return 0;  //INVALIDE!!!
+                return 0;  //INVALID!!!
             }
         }
     }
 
-    return 1;  //Tout est ok
+    return 1;  //everything ok
 }

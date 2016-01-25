@@ -2,41 +2,41 @@
 
 void resolver()
 {
-    int grille[9][9], patron[9][9] = {{0}};
-    int estValide;
-    double difTemps = 0.0;
-    clock_t tempsInitial, tempsFinal;
+    int grid[9][9], pattern[9][9] = {{0}};
+    int isValid;
+    double deltaT = 0.0;
+    clock_t initTime, EndTime;
 
-    viderFichier("sudoku.txt"); //On vide le fichier pour réécrire dans un vide (et le créer si il n'existe pas).
+    clearFile("sudoku.txt"); //Clear the file to write in a empty one (and create it if not).
 
     cout << "***************SUDOKU Resolver***************" << endl << endl;
-    selectionnerEntree(grille, patron);
+    selectInput(grid, pattern);
 
-    cout << "----------Grille initiale-----------" << endl << endl << "    ";
-    affichageGrilleConsole(grille);
-    affichageGrilleFichier(grille, "sudoku.txt");
-    cout << endl << "Calculs en cours..." << endl;
+    cout << "-----------Initial grid-----------" << endl << endl << "    ";
+    consoleGridDisplay(grid);
+    fileGridDisplay(grid, "sudoku.txt");
+    cout << endl << "Processing..." << endl;
 
-    tempsInitial = clock();
+    initTime = clock();
 
-    estValide = resoudre(grille, patron);
+    isValid = solve(grid, pattern);
 
-    if (estValide)
+    if (isValid)
     {
-        cout << endl << "----------La grille finale----------" << endl << endl << "    ";
-        affichageGrilleConsole(grille);
-        affichageGrilleFichier(grille, "sudoku.txt");
+        cout << endl << "------------Solved grid-----------" << endl << endl << "    ";
+        consoleGridDisplay(grid);
+        fileGridDisplay(grid, "sudoku.txt");
     }
     else
     {
-        cerr << endl << "La grille initiale est invalide!";
+        cerr << endl << "Invalid initial grid!";
     }
 
 
-    tempsFinal = clock();
-    difTemps = (double)(tempsFinal-tempsInitial)/CLOCKS_PER_SEC;
-    cout << endl << endl << "Fini en " << difTemps << " secondes" << endl << endl;
-    affichageTempsFichier(difTemps, "sudoku.txt");
+    EndTime = clock();
+    deltaT = (double)(EndTime-initTime)/CLOCKS_PER_SEC;
+    cout << endl << endl << "Done in " << deltaT << " seconds" << endl << endl;
+    timeFileDisplay(deltaT, "sudoku.txt");
 
     return;
 }

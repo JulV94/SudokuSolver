@@ -1,26 +1,24 @@
 #include <iostream>
 #include <fstream>
-#include "entrees.h"
+#include "inputs.h"
 #include "solver.h"
-#include "sorties.h"
+#include "outputs.h"
 #include "resolver.h"
 
 using namespace std;
 
-void menu();
-
 int main()
 {
-    char retourMenu;
+    char backToMenu;
 
     while (1)
     {
         resolver();
 
-        cout << "Retourner au menu? (O/N) : ";
-        cin >> retourMenu;
+        cout << "Go back to the menu? (Y/N) : ";
+        cin >> backToMenu;
         cout << endl << endl;
-        if (retourMenu != 'o' && retourMenu != 'O' && retourMenu != 'y' && retourMenu != 'Y')
+        if (backToMenu != 'y' && backToMenu != 'Y')
         {
             return 0;
         }

@@ -4,9 +4,9 @@
 #include <iostream>
 using namespace std;
 
-int estDansLigne(int grille[9][9], int n, int i);
-int estDansColonne(int grille[9][9], int n, int j);
-int estDansCarre(int grille[9][9], int n, int i, int j);
-int resoudre(int grille[9][9], int patron[9][9]);
+int isInLine(int grid[9][9], int n, int i);
+int isInColumn(int grid[9][9], int n, int j);
+int isInSquare(int grid[9][9], int n, int i, int j);
+int solve(int grid[9][9], int pattern[9][9]);
 
 #endif // SOLVER_INCLUDED
